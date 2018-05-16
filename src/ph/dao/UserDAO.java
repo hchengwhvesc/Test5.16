@@ -91,13 +91,15 @@ public class UserDAO
         return user;
     }
 
-    public List<User> searchCustomer(String cname) throws Exception{
+    public List<User> searchCustomer(String cname) throws Exception
+    {
         List<User> users = new ArrayList<User>();
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        try {
+        try
+        {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_ph","root", "root");
             // 1.找符合条件的医生
@@ -105,7 +107,8 @@ public class UserDAO
             ps.setString(1, "%" + cname + "%");
 
             rs = ps.executeQuery();
-            while (rs.next()) {// 这里查询的是t_vet.* 所以使用Vet封装
+            while (rs.next()) // 这里查询的是t_vet.* 所以使用Vet封装
+            {
                 User user=new User();
                 user.setAddress(rs.getString("address"));;
                 user.setId(rs.getInt("id"));
@@ -113,12 +116,8 @@ public class UserDAO
                 user.setPwd(rs.getString("pwd"));
                 user.setRole(rs.getString("role"));
                 user.setTel(rs.getString("tel"));
-
                 users.add(user);
             }
-
-
-
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -211,11 +210,11 @@ public class UserDAO
         }
         finally
         {
-            if(ps!=null)
+            if(ps != null)
             {
                 ps.close();
             }
-            if(con!=null)
+            if(con != null)
             {
                 con.close();
             }
